@@ -25,9 +25,10 @@ jobs:
         retention-days: 30
 
     - name: Send Slack notification
+      if: always() 
       uses: slackapi/slack-github-action@v1.27.0
       with:
-      channel-id: 'C09FYPLJA1W'
+       channel-id: 'C09FYPLJA1W'
       slack-message: "Playwright tests"
       env:
-       SLACK_BOT_TOKEN: ${{ secrets.BOTUSEROAUTHTOKEN }}
+       SLACK_BOT_TOKEN: ${{secrets.BOTUSEROAUTHTOKEN}}
