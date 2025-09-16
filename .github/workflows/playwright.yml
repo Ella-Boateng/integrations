@@ -1,7 +1,7 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
 jobs:
   test:
     timeout-minutes: 60
@@ -28,7 +28,7 @@ jobs:
       if: always() 
       uses: slackapi/slack-github-action@v1.27.0
       with:
-       channel-id: 'C09FYPLJA1W'
-      slack-message: "Playwright tests"
+        channel-id: 'C09FYPLJA1W'
+        slack-message: "Playwright tests"
       env:
-       SLACK_BOT_TOKEN: ${{secrets.BOTUSEROAUTHTOKEN}}
+        SLACK_BOT_TOKEN: ${{ secrets.BOTUSEROAUTHTOKEN }}
