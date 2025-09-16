@@ -23,3 +23,11 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    - name: Send Slack notification
+      uses: slackapi/slack-github-action@v1.27.0
+      with:
+      channel-id: 'C09FYPLJA1W'
+      slack-message: "Playwright tests"
+      env:
+       SLACK_BOT_TOKEN: ${{ secrets.BOTUSEROAUTHTOKEN }}
