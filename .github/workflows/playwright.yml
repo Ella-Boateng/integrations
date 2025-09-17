@@ -30,5 +30,6 @@ jobs:
       with:
         channel-id: 'C09FYPLJA1W'
         slack-message: "Playwright tests"
+        Status: ${{ job.status }}
       env:
         SLACK_BOT_TOKEN: ${{ secrets.BOTUSEROAUTHTOKEN }}
