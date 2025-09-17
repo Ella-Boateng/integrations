@@ -29,7 +29,9 @@ jobs:
       uses: slackapi/slack-github-action@v1.27.0
       with:
         channel-id: 'C09FYPLJA1W'
-        slack-message: "Playwright tests Status: ${{ job.status }} "
+        slack-message: |
+         Playwright Tests 
+         Status: ${{ job.status }} 
               
       env:
         SLACK_BOT_TOKEN: ${{ secrets.BOTUSEROAUTHTOKEN }}
