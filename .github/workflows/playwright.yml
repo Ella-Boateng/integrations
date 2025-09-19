@@ -16,7 +16,23 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --reporter=json > results.json
+    - name: Parse results.json
+      run: |
+        node -e "
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('results.json', 'utf8'));
+          const parsed = data.suites.flatMap(suite =>
+            suite.suites.flatMap(browser =>
+              browser.specs.map(spec => ({
+                test: spec.title,
+                browser: browser.title,
+                status: spec.tests[0].results[0].status
+              }))
+            )
+          );
+          console.log(parsed);
+        "
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
