@@ -24,12 +24,11 @@ jobs:
           const data = JSON.parse(fs.readFileSync('results.json', 'utf8'));
           console.log(data);
           const parsed = data.suites.flatMap(suite =>
-            suite.suites.flatMap(browser =>
-              browser.specs.map(spec => ({
+            suite.specs.map(spec => ({
                 test: spec.title,
                 browser: browser.title,
                 status: spec.tests[0].results[0].status
-              }))
+              })
             )
           );
           console.log(parsed);
