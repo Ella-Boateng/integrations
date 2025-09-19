@@ -18,7 +18,7 @@ jobs:
     - name: Run Playwright tests
       run: npx playwright test --reporter=json > results.json
     - name: Parse results.json
-      run: |
+      run: | 
         node -e "
           const fs = require('fs');
           const data = JSON.parse(fs.readFileSync('results.json', 'utf8'));
