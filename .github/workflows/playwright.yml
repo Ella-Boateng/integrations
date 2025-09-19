@@ -26,7 +26,7 @@ jobs:
           const parsed = data.suites.flatMap(suite =>
             suite.specs.map(spec => ({
                 test: spec.title,
-                browser: browser.title,
+                browser: spec.title,
                 status: spec.tests[0].results[0].status
               })
             )
