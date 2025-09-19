@@ -16,7 +16,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test --reporter=json > results.json
+      run: npx playwright test --reporter=json > results.json || true
     - name: Parse results.json
       run: | 
         node -e "
