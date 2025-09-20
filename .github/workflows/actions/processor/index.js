@@ -20,7 +20,7 @@ async function run() {
           spec.tests.forEach((test) => {
             parsed.push({
               platforn: test.projectId,
-              batch: data.config?.["metadata"]?.["gitCommit"]?.["hash"],
+              batch: data.config?.metadata?.gitCommit?.hash,
               file: spec.file,
               test: spec.title,
               browser: browser || suite.title,
