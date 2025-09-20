@@ -19,6 +19,9 @@ async function run() {
         suite.specs.forEach((spec) => {
           spec.tests.forEach((test) => {
             parsed.push({
+              platforn: test.projectId,
+              batch: data.config?.["metadata"]?.["gitCommit"]?.["hash"],
+              file: spec.file,
               test: spec.title,
               browser: browser || suite.title,
               status: test.results[0].status,
@@ -47,8 +50,8 @@ async function run() {
 
     for (const r of parsed) {
       await connection.execute(
-        "INSERT INTO playwright_results (test, browser, status, error) VALUES (?, ?, ?, ?)",
-        [r.test, r.browser, r.status, r.error]
+        "INSERT INTO playwright_results (test, browser, status, error, platform, batch, file) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [r.test, r.browser, r.status, r.error, t.platform, t.batch, t.file]
       );
     }
 
