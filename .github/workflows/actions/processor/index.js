@@ -50,7 +50,7 @@ async function run() {
 
 
     //create the batch
-    await connection.execute("INSERT INTO playwrite_batches(hash) VALUES(?)", [process.env.GITHUB_RUN_ID]);
+    await connection.execute("INSERT INTO playwright_batches(hash) VALUES(?)", [process.env.GITHUB_RUN_ID]);
 
     for (const r of parsed) {
       await connection.execute(
