@@ -51,7 +51,7 @@ async function run() {
     for (const r of parsed) {
       await connection.execute(
         "INSERT INTO playwright_results (test, browser, status, error, platform, batch, file) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [r.test, r.browser, r.status, r.error, t.platform, t.batch, t.file]
+        [r.test, r.browser, r.status, r.error, r.platform, r.batch, r.file]
       );
     }
 
