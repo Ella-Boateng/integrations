@@ -21,7 +21,9 @@ jobs:
     #   run: npx playwright test --reporter=json > results.json || true
 
     - name: Download file into results.json
-      run: wget -O results.json "https://drive.google.com/file/d/1P62Imc10TNg5O0OO06UR8T0VuyBJYYWV/view?usp=sharing"
+      # run: wget -O results.json "https://drive.google.com/file/d/1P62Imc10TNg5O0OO06UR8T0VuyBJYYWV/view?usp=sharing"
+      run: wget -o results.json --no-check-certificate "https://docs.google.com/uc?export=download&confirm=t&id=1P62Imc10TNg5O0OO06UR8T0VuyBJYYWV" -O downloaded_file
+
 
     - name: Install processor deps
       run: |
