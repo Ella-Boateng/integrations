@@ -62,7 +62,7 @@ async function run() {
   }
 }
 
-function safe(value: any) {
+function safe(value) {
   return value === undefined ? null : value;
 }
 
