@@ -40,7 +40,8 @@ async function run() {
       user,
       password: pass,
       database: db,
-      port: '4085'
+      port: 4085,
+      "ssl": { rejectUnauthorized: true } 
     });
 
     for (const r of parsed) {
