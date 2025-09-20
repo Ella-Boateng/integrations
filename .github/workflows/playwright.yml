@@ -19,7 +19,7 @@ jobs:
       run: npx playwright test --reporter=json > results.json || true
       
     - name: Upload results to MySQL
-      uses: ./.github/actions/processor
+      uses: ./actions/processor
       with:
         results-file: results.json
         db-host: 'serverless-northeurope.sysp0000.db3.skysql.com'
