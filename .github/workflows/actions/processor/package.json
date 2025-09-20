@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "mysql2": "^3.9.7"
+    "mysql2": "^3.9.7",
+    "@actions/core": "^1.10.0",
   }
 }
