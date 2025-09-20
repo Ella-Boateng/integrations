@@ -51,7 +51,7 @@ async function run() {
     for (const r of parsed) {
       await connection.execute(
         "INSERT INTO playwright_results (test, browser, status, error, platform, batch, file) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [r.test, r.browser, r.status, r.error, r.platform, r.batch, r.file]
+        [safe(r.test), safe(r.browser), safe(r.status), safe(r.error), safe(r.platform), safe(r.batch), safe(r.file)]
       );
     }
 
@@ -61,5 +61,10 @@ async function run() {
     core.setFailed(error.message);
   }
 }
+
+function safe(value: any) {
+  return value === undefined ? null : value;
+}
+
 
 run();
