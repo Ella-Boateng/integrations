@@ -19,9 +19,9 @@ async function run() {
         suite.specs.forEach((spec) => {
           spec.tests.forEach((test) => {
             parsed.push({
-              platforn: test.projectId,
-              batch: data.config?.metadata?.gitCommit?.hash,
-              file: spec.file,
+              platforn: test.projectId ?? null,
+              batch: data.config?.metadata?.gitCommit?.hash ?? null,
+              file: spec.file ?? null,
               test: spec.title,
               browser: browser || suite.title,
               status: test.results[0].status,
