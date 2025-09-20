@@ -11,7 +11,7 @@ async function run() {
     const db = core.getInput("db-name");
 
     const data = JSON.parse(fs.readFileSync(resultsFile, "utf8"));
-    console.log("data",data);
+    console.log("data",JSON.stringify(data));
     const parsed = [];
 
     function walkSuite(suite, browser) {
