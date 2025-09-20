@@ -1,0 +1,20 @@
+name: "Processor"
+description: "Parse Playwright JSON results and upload to MySQL"
+author: "You"
+
+inputs:
+  results-file:
+    description: "Path to Playwright JSON results file"
+    required: true
+  db-host:
+    required: true
+  db-user:
+    required: true
+  db-pass:
+    required: true
+  db-name:
+    required: true
+
+runs:
+  using: "node16"
+  main: "index.js"
