@@ -20,7 +20,7 @@ async function run() {
           spec.tests.forEach((test) => {
             parsed.push({
               platform: test.projectId ?? null,
-              batch: data.config?.metadata?.gitCommit?.hash ?? null,
+              batch: process.env.GITHUB_RUN_ID, //data.config?.metadata?.gitCommit?.hash ?? null,
               file: spec.file ?? null,
               test: spec.title,
               browser: browser || suite.title,
@@ -47,6 +47,10 @@ async function run() {
       port: 4085,
       "ssl": { rejectUnauthorized: true } 
     });
+
+
+    //create the batch
+    await connection.execute("INSERT INTO playwrite_batches(hash) VALUES(?)", [process.env.GITHUB_RUN_ID]);
 
     for (const r of parsed) {
       await connection.execute(
