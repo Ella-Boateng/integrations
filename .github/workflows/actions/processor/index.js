@@ -40,6 +40,7 @@ async function run() {
       user,
       password: pass,
       database: db,
+      port: '4085'
     });
 
     for (const r of parsed) {
