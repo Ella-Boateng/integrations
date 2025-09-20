@@ -17,6 +17,11 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test --reporter=json > results.json || true
+
+    - name: Install processor deps
+      run: |
+        cd .github/workflows/actions/processor
+        npm install
       
     - name: Upload results to MySQL
       uses: ./.github/workflows/actions/processor
