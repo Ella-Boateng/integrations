@@ -16,7 +16,7 @@ jobs:
       run: npm ci
       
     # - name: Install Playwright Browsers
-    #   run: npx playwright install --with-depss
+    #   run: npx playwright install --with-deps
     
     # - name: Run Playwright tests
     #   run: npx playwright test --reporter=json > results.json || true
