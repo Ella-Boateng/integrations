@@ -45,7 +45,7 @@ async function run() {
       password: pass,
       database: db,
       port: 3306,
-      "ssl": { rejectUnauthorized: true } 
+      "ssl": { rejectUnauthorized: false } 
     });
 
 
