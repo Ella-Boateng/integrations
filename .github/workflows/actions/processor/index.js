@@ -48,10 +48,13 @@ async function run() {
       "ssl": { rejectUnauthorized: false } 
     });
 
+    let meta = {
+        stats: data.stats
+    };
 
     //create the batch
-    await connection.execute("INSERT INTO playwright_batches(hash) VALUES(?)", [process.env.GITHUB_RUN_ID]);
-
+    await connection.execute("INSERT INTO playwright_batches(hash, meta) VALUES(?, ?)", [process.env.GITHUB_RUN_ID, JSON.stringify(meta)]);
+    
     for (const r of parsed) {
       await connection.execute(
         "INSERT INTO playwright_results (test, browser, status, error, platform, batch, file) VALUES (?, ?, ?, ?, ?, ?, ?)",
