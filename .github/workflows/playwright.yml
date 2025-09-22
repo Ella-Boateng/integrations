@@ -35,10 +35,10 @@ jobs:
       uses: ./.github/workflows/actions/processor
       with:
         results-file: results.json
-        db-host: 'serverless-northeurope.sysp0000.db3.skysql.com'
-        db-user: 'dbpbf33147723'
-        db-pass: '4bPgtnNrIo7.E0JhyWomS5Nu'
-        db-name: 'willybot'
+        db-host: '104.248.237.168'
+        db-user: 'wilybot'
+        db-pass: 'wilybot,X9050'
+        db-name: 'wilybot'
         
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
