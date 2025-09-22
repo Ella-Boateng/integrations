@@ -1,6 +1,6 @@
 name: "Processor"
 description: "Parse Playwright JSON results and upload to MySQL"
-author: "You"
+author: "Candle"
 
 inputs:
   results-file:
