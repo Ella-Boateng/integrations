@@ -6,15 +6,7 @@ import { Bug, GitBranch, TestTube, AlertTriangle, TrendingUp, Calendar, Filter, 
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import moment from "moment";
 
-const testSummaryData = {
-    totalTests: 2847,
-    passed: 2456,
-    failed: 234,
-    flaky: 157,
-    passRate: 86.3,
-    failRate: 8.2,
-    flakyRate: 5.5
-};
+
 
 const detailedTestData = {
     passed: [
@@ -190,6 +182,25 @@ export default function Home() {
             console.log('Fetching batches...',response);
         })()
     },[])
+
+
+    const testSummaryData = useMemo(() => {
+        let totalTest = (result?.stats?.expected ?? 0) + (result?.stats?.unexpected ?? 0);
+        let passed = (result?.stats?.expected ?? 0);
+        let failed = (result?.stats?.unexpected ?? 0);
+        let flaky = (result?.stats?.flaky ?? 0);
+        return {
+            totalTests: totalTest,
+            passed: passed,
+            failed: failed,
+            flaky: flaky,
+            passRate: (passed / totalTest) * 100,
+            failRate: (failed / totalTest) * 100 ,
+            flakyRate: (flaky / totalTest) * 100,
+        }
+    },[result])
+
+
 
     useEffect(() => {
         console.log('batches.',batches);
