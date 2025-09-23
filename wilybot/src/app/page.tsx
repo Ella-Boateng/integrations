@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Bug, GitBranch, TestTube, AlertTriangle, TrendingUp, Calendar, Filter, RefreshCw } from 'lucide-react';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import moment from "moment";
+import { PlaywrightResult } from "./api/result/route";
 
 
 
@@ -150,8 +151,10 @@ export interface Result {
         skipped: number
         unexpected: number
         startTime: string
-        average_resolution: number
+        average_resolution: number,
+        reopened_count: number
     },
+    hotspots: PlaywrightResult[]
     created_at: string;
 }
 
@@ -197,6 +200,7 @@ export default function Home() {
             passRate: (passed / totalTest) * 100,
             failRate: (failed / totalTest) * 100 ,
             flakyRate: (flaky / totalTest) * 100,
+            average_reopened_rate: passed > 0 ? (result?.stats?.reopened_count ?? 0 / passed) * 100 : 0
         }
     },[result])
 
@@ -522,15 +526,15 @@ export default function Home() {
                                     color="text-blue-600"
                                 />
                                 <MetricCard
-                                    title="Avg Reopen Rate"
-                                    value="23.6%"
+                                    title="Reopen Count"
+                                    value={result?.stats?.reopened_count}
                                     change={-1.8}
                                     icon={RefreshCw}
                                     color="text-red-600"
                                 />
                                 <MetricCard
                                     title="Critical Hotspots"
-                                    value="2"
+                                    value={result?.hotspots.length}
                                     change={-1}
                                     icon={AlertTriangle}
                                     color="text-orange-600"

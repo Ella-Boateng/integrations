@@ -2,7 +2,7 @@ import {NextResponse} from "next/server";
 import db from "@/lib/db";
 import {Result} from "@/app/page";
 
-interface PlaywrightResult {
+export interface PlaywrightResult {
     id: string;
     test: string
     title: string;
@@ -46,7 +46,6 @@ export async function GET(request: Request) {
             let previousResult = await db("playwright_results")
                 .where("batch", previousBatch["hash"])
                 .select("*");
-
             for (let result of previousResult) {
                 if ("failed" === result["status"]) {
                     previousErrorCount = previousErrorCount + 1;
@@ -60,16 +59,54 @@ export async function GET(request: Request) {
             averageResolutionRate = previousErrorCount > 0 ?  ( resolvedPreviousErrorCount / previousErrorCount ) * 100 : 0;
         }
 
+        let reopenedCount = 0;
+        let hotspots: PlaywrightResult[] = [];
+        for(let result of currentResult) {
+            if ("failed" === result["status"]) {
+                
+                let hasFailedAndPassedBefore = await db("playwright_results as PR1")
+                .select("*")
+                .whereNot("PR1.batch", result["batch"])
+                .andWhere("PR1.test", result["test"])
+                .andWhere("PR1.platform", result["platform"])
+                .andWhere("PR1.status", "failed")
+                .whereExists(function () {
+                    this.select(1)
+                    .from("playwright_results as PR2")
+                    .whereNot("PR2.batch", "17943104481")
+                    .whereRaw("PR1.test = PR2.test")
+                    .andWhereRaw("PR1.platform = PR2.platform")
+                    .andWhereRaw("PR1.browser = PR2.browser")
+                    .andWhere("PR2.status", "!=", "failed")
+                    .andWhereRaw("PR2.created_at > PR1.created_at");
+                }) as PlaywrightResult[];
+
+                if (hasFailedAndPassedBefore.length > 0) {
+                    reopenedCount = reopenedCount + 1;
+                }
+
+                hotspots = [
+                    ...hotspots,
+                    ...new Map(hasFailedAndPassedBefore.map(item => [item.id, item])).values()
+                ]
+            }
+        }
+
+
+
         let stats = batch["meta"];
 
         return NextResponse.json({
             stats: {
                 ...stats?.stats,
+                reopened_count: reopenedCount,
+                average_reopened_rate: resolvedPreviousErrorCount > 0 ? (( reopenedCount / resolvedPreviousErrorCount ) * 100) : 0,
                 average_resolution: averageResolutionRate,
                 previousBatch: previousBatch,
                 previousErrorCount: previousErrorCount,
                 resolvedPreviousErrorCount: resolvedPreviousErrorCount
             },
+            hotspots: hotspots,
             created_at: batch["created_at"],
         });
 
